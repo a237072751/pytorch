@@ -1,5 +1,7 @@
+# Know more about focal loss https://arxiv.org/abs/1708.02002
 # This scripts is wrote by reference to https://github.com/DingKe/pytorch_workplace/blob/master/focalloss/loss.py
 # A little revisement
+# This script is for gpu version, you can change it for a cpu version
 
 import torch
 import torch.nn as nn
@@ -23,6 +25,9 @@ class FocalLoss(nn.Module):
         self.eps = eps
 
     def forward(self, input, target):
+        # input, target is instances of autograd.Variable on cuda 
+        # input.size()  ([batch_size, classes])
+        # target.size() ([batch_size])
         y = one_hot(target, input.size(1))
 
         logit = F.softmax(input)
